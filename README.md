@@ -9,5 +9,8 @@ Built with platformio.
 TODO:
 
 	* Add schematics
-	* Configureable delay via potmeter
+	* Configureable delay
 	* UI?
+	* Timelapse
+	* Lightning mode
+	* Audio triggered
