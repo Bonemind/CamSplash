@@ -3,6 +3,7 @@
 
 #include "Arduino.h"
 #include <multiCameraIrControl.h>
+#include <Arduino_Vector.h>
 #include "Pins.h"
 
 /**
@@ -37,5 +38,28 @@ class Mode
 		 * Called when the action button is pressed
 		 */
 		virtual void onAction() = 0;
+
+		/*
+		 * Allows a class to have settings
+		 */
+		bool setSetting(int idx, int value) {
+			if (this->settings.size() <= idx) {
+				Serial.print("OOB\n");
+				return false;
+			}
+			settings[idx] = value;
+		}
+
+		/*
+		 * Initializes settings vector with count elements
+		 */
+		void initializeSettings(int count) {
+			for (int i = 0; i < count; i++) {
+				this->settings.push_back(0);
+			}
+		}
+
+	protected:
+		Vector<int> settings;
 };
 #endif
