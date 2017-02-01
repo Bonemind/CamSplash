@@ -55,6 +55,13 @@ void IRMode::pulseIR() {
 	}
 }
 
+/*
+ * Called when an action is requested
+ */
+void IRMode::onAction() {
+	//TODO: Something
+}
+
 /**
  * Cleanup after running the ir mode
  * There is nothing to clean up, so no-op

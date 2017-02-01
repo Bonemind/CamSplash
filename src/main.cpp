@@ -13,7 +13,8 @@
 bool lastState = false;
 int modeIdx = 0;
 
-bool lastButtonState = false;
+bool prevModeButtonState = false;
+bool prevActionButtonState = false;
 
 // The camera object, used to control the camera
 Nikon nikon(CAMERA_CONTROL_PIN);
@@ -80,19 +81,21 @@ void nextMode() {
 void loop() {
 	// Determine when we're trying to switch modes
 	// Inverted because pullup
-	bool buttonpressed = !digitalRead(MODE_BUTTON_PIN);
+	bool modeButtonPressed = !digitalRead(MODE_BUTTON_PIN);
 
-	if (buttonpressed && !lastButtonState) {
+	if (modeButtonPressed && !prevModeButtonState) {
 		nextMode();
 		Serial.print(currentMode->getName());
 		Serial.print("\n");
-		digitalWrite(2, HIGH);
-	} else {
-		digitalWrite(2, LOW);
 	}
+	prevModeButtonState = modeButtonPressed;
 
-	lastButtonState = buttonpressed;
 
+	bool actionButtonPressed = !digitalRead(ACTION_BUTTON_PIN);
+	if (actionButtonPressed && !prevActionButtonState) {
+		currentMode->onAction();
+	}
+	prevActionButtonState = actionButtonPressed;
 
 	// Run mode
 	currentMode->update();

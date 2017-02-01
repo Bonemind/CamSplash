@@ -3,7 +3,6 @@
 
 RemoteMode::RemoteMode(Nikon* cam) {
 	this->camera = cam;
-	this->wasPressed = false;
 }
 
 /**
@@ -25,11 +24,14 @@ void RemoteMode::initialize() {
  * No-op since the mode is not doing anything
  */
 void RemoteMode::update() {
-	bool isPressed = !digitalRead(ACTION_BUTTON_PIN);
-	if (isPressed && !this->wasPressed) {
-		Serial.print("SHUTTER\n");
-	}
-	this->wasPressed = isPressed;
+	// Void
+}
+
+/*
+ * Called when an action is requested
+ */
+void RemoteMode::onAction() {
+	Serial.print("SHUTTER\n");
 }
 
 /**

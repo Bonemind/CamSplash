@@ -2,7 +2,6 @@
 
 DelayMode::DelayMode(Nikon* cam) {
 	this->camera = cam;
-	this->wasPressed = false;
 }
 
 /**
@@ -25,11 +24,14 @@ void DelayMode::initialize() {
  * TODO: Actually add possibility to delay
  */
 void DelayMode::update() {
-	bool isPressed = !digitalRead(ACTION_BUTTON_PIN);
-	if (isPressed && !this->wasPressed) {
-		Serial.print("SHUTTER\n");
-	}
-	this->wasPressed = isPressed;
+	// Void
+}
+
+/*
+ * Called when an action is requested
+ */
+void DelayMode::onAction() {
+	// TODO: Make use delay
 }
 
 /**

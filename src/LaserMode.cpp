@@ -5,7 +5,6 @@
  */
 LaserMode::LaserMode(Nikon* cam) {
 	this->camera = cam;
-	this->lastState = false;
 }
 
 /**
@@ -48,14 +47,6 @@ void LaserMode::update() {
 	// Average lightvalue
 	this->lightValue = (currReading + this->lightValue) / 2;
 
-	// Check if we want to reset (start listening again)
-	bool currState = !digitalRead(ACTION_BUTTON_PIN);
-	if (currState && currState != lastState) {
-		this->reset();
-		return;
-	}
-	lastState = currState;
-
 	// If we're not past calibrating, simply return
 	if (millis() - this->startMillis < this->CALIBRATION_DELAY) {
 		return;
@@ -67,6 +58,13 @@ void LaserMode::update() {
 		this->listening = false;
 		Serial.print("SHUTTER\n");
 	}
+}
+
+/*
+ * Called when an action is requested
+ */
+void LaserMode::onAction() {
+	this->reset();
 }
 
 /**

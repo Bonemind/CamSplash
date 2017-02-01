@@ -30,9 +30,13 @@ class RemoteMode : public Mode
 		 */
 		void end();
 
+		/*
+		 * Called when the action button is pressed
+		 */
+		void onAction();
+
 	private:
 		Nikon* camera;
-		bool wasPressed;
 };
 
 #endif

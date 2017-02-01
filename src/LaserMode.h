@@ -30,6 +30,11 @@ class LaserMode : public Mode
 		 */
 		void end();
 
+		/*
+		 * Called when the action button is pressed
+		 */
+		void onAction();
+
 	private:
 		// How long to average the light value before we start listening for shutter
 		const unsigned long CALIBRATION_DELAY = 1000;
@@ -37,9 +42,6 @@ class LaserMode : public Mode
 		// The reference to the camera object
 		Nikon* camera;
 
-		// The previous state the action button was in
-		bool lastState;
-		
 		// The time this iteration of waiting for the laser started
 		unsigned long startMillis;
 

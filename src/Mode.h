@@ -7,7 +7,7 @@
 
 /**
  * Abstact mode class
- * Parent for any modes we need during roasting
+ * Parent for any modes we need while taking pictures
  */
 class Mode
 {
@@ -32,5 +32,10 @@ class Mode
 		 * Called when a mode should clean up after itself
 		 */
 		virtual void end() = 0;
+
+		/*
+		 * Called when the action button is pressed
+		 */
+		virtual void onAction() = 0;
 };
 #endif
