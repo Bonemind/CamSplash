@@ -30,15 +30,24 @@ class LaserMode : public Mode
 		 */
 		void end();
 
-
-
 	private:
+		// How long to average the light value before we start listening for shutter
+		const unsigned long CALIBRATION_DELAY = 1000;
+
+		// The reference to the camera object
 		Nikon* camera;
+
+		// The previous state the action button was in
 		bool lastState;
-		int startMillis;
+		
+		// The time this iteration of waiting for the laser started
+		unsigned long startMillis;
+
+		// The current (averaged) light value
 		int lightValue;
+
+		// Whether we are actually listening to trigger shutter or not
 		bool listening = false;
-		const int CALIBRATION_DELAY = 1000;
 
 		/**
 		 * Resets the mode to it's original state

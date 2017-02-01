@@ -1,6 +1,8 @@
 #include "LaserMode.h"
 
-
+/**
+ * Constructor
+ */
 LaserMode::LaserMode(Nikon* cam) {
 	this->camera = cam;
 	this->lastState = false;
@@ -27,7 +29,7 @@ void LaserMode::reset() {
 	this->lightValue = analogRead(LASER_SENSOR_PIN);
 	this->startMillis = millis();
 	digitalWrite(LASER_PIN, HIGH);
-	this->listening = false;
+	this->listening = true;
 }
 
 /**
@@ -37,40 +39,34 @@ void LaserMode::reset() {
 void LaserMode::update() {
 	// Get current reading
 	int currReading = analogRead(LASER_SENSOR_PIN);
+	int lastReading = this->lightValue;
 
 	// Get Different with previous reading
 	int diff = this->lightValue - currReading;
 	diff = abs(diff);
 
+	// Average lightvalue
+	this->lightValue = (currReading + this->lightValue) / 2;
 
 	// Check if we want to reset (start listening again)
 	bool currState = !digitalRead(ACTION_BUTTON_PIN);
 	if (currState && currState != lastState) {
 		this->reset();
+		return;
 	}
 	lastState = currState;
 
-	// Check if we're past calibration time, if so, set listening
-	if (this->startMillis + this->CALIBRATION_DELAY > millis()) {
-		this->listening = true;
-	}
-
-	if (this->listening) {
-		Serial.print(currReading);
-		Serial.print(" : ");
-		Serial.print(this->lightValue);
-		Serial.print("\n");
+	// If we're not past calibrating, simply return
+	if (millis() - this->startMillis < this->CALIBRATION_DELAY) {
+		return;
 	}
 
 	// If the light difference is more than 10%, we want to shutter
-	if (this->listening && (diff > 0.1 * this->lightValue)) {
+	if (this->listening && (diff > 0.1 * lastReading)) {
 		digitalWrite(LASER_PIN, LOW);
 		this->listening = false;
 		Serial.print("SHUTTER\n");
 	}
-
-	// Average lightvalue
-	this->lightValue = (currReading + this->lightValue) / 2;
 }
 
 /**
