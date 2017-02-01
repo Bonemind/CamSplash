@@ -3,15 +3,11 @@
 #include "RemoteMode.h"
 #include "DelayMode.h"
 #include "IRMode.h"
+#include "LaserMode.h"
 #include <multiCameraIrControl.h>
 #include "Pins.h"
 
-#define MODECOUNT 3
-
-// Prelimenary sketch
-// Waits for the IR sensor to switch to either on or off, then triggers the
-// IR led that controls the camera to take a picture
-// TODO: Cleanup code, add delay
+#define MODECOUNT 4
 
 // The last state the ir-led was in, true if visible, false if not visible
 bool lastState = false;
@@ -40,6 +36,7 @@ void setup(void) {
 	pinMode(IR_SENSOR_PIN, INPUT);
 	pinMode(FEEDBACKPIN, OUTPUT);
 	pinMode(CAMERA_CONTROL_PIN, OUTPUT);
+	pinMode(LASER_PIN, OUTPUT);
 	pinMode(MODE_BUTTON_PIN, INPUT_PULLUP);
 	pinMode(ACTION_BUTTON_PIN, INPUT_PULLUP);
 	pinMode(PLUS_BUTTON_PIN, INPUT_PULLUP);
@@ -72,6 +69,9 @@ void nextMode() {
 			break;
 		case 2:
 			currentMode = new IRMode(&nikon);
+			break;
+		case 3:
+			currentMode = new LaserMode(&nikon);
 			break;
 	}
 	currentMode->initialize();

@@ -9,4 +9,6 @@
 #define ACTION_BUTTON_PIN 9
 #define PLUS_BUTTON_PIN 10
 #define MINUS_BUTTON_PIN 11
+#define LASER_PIN 12
+#define LASER_SENSOR_PIN A0
 #endif
