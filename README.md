@@ -14,10 +14,19 @@ TODO:
 	* Timelapse
 	* Lightning mode
 	* Audio triggered
-	* Centralize SET and MODE button reading
-	* Centralize Settings handling
 
 ### Definitions
 
 Action button: Button that tells mode to start doing it's thing, take a picture for the remote mode for example
 Mode button: The button used to switch between modes
+
+### Serial protocol
+
+The serial protocol is very simple
+Every command and reply is terminated by a single newline
+Supported commands are:
+	* CURRENTMODE -> Returns the int index of the mode we're currently in
+	* CURRENTSETTINGS -> Returns the current settings in format set1:value;set2:value;\n
+	* CONFIGURE idx value -> Sets setting with idx to value
+	* MODE idx -> Switch to mode with index idx
+	* ACTION -> Tells mode to start it's work
