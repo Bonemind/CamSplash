@@ -25,6 +25,7 @@ Mode button: The button used to switch between modes
 The serial protocol is very simple
 Every command and reply is terminated by a single newline
 Supported commands are:
+
 	* CURRENTMODE -> Returns the int index of the mode we're currently in
 	* CURRENTSETTINGS -> Returns the current settings in format set1:value;set2:value;\n
 	* CONFIGURE idx value -> Sets setting with idx to value
