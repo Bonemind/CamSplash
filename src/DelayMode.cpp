@@ -1,7 +1,10 @@
 #include "DelayMode.h"
+#define SETTINGS_MILLIS_DELAY 0
 
 DelayMode::DelayMode(Nikon* cam) {
 	this->camera = cam;
+	this->waitingForTime = false;
+	this->initializeSettings(1);
 }
 
 /**
@@ -24,14 +27,24 @@ void DelayMode::initialize() {
  * TODO: Actually add possibility to delay
  */
 void DelayMode::update() {
-	// Void
+	if (!this->waitingForTime) {
+		return;
+	}
+
+	if (millis() - this->startMillis < this->settings[SETTINGS_MILLIS_DELAY]) {
+		return;
+	}
+
+	Serial.print("SHUTTER\n");
+	this->waitingForTime = false;
 }
 
 /*
  * Called when an action is requested
  */
 void DelayMode::onAction() {
-	// TODO: Make use delay
+	this->startMillis = millis();
+	this->waitingForTime = true;
 }
 
 /**

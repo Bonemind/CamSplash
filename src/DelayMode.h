@@ -37,6 +37,8 @@ class DelayMode : public Mode
 
 	private:
 		Nikon* camera;
+		unsigned long startMillis;
+		bool waitingForTime;
 };
 
 #endif
