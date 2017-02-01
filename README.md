@@ -14,3 +14,10 @@ TODO:
 	* Timelapse
 	* Lightning mode
 	* Audio triggered
+	* Centralize SET and MODE button reading
+	* Centralize Settings handling
+
+### Definitions
+
+Action button: Button that tells mode to start doing it's thing, take a picture for the remote mode for example
+Mode button: The button used to switch between modes
