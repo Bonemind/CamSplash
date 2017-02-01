@@ -58,6 +58,19 @@ class Mode
 			}
 		}
 
+		/**
+		 * Prints the current settings of this mode, if any
+		 */
+		void printSettings() {
+			for (int i = 0; i < this->settings.size(); i++) {
+				Serial.print(i);
+				Serial.print(":");
+				Serial.print(this->settings[i]);
+				Serial.print(";");
+			}
+			Serial.print("\n");
+		}
+
 	protected:
 		// Vector that stores our settings
 		Vector<int> settings;
