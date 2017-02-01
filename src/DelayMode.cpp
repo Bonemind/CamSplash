@@ -24,7 +24,6 @@ void DelayMode::initialize() {
 /**
  * Update the delay mode
  * No-op since the mode is not doing anything
- * TODO: Actually add possibility to delay
  */
 void DelayMode::update() {
 	if (!this->waitingForTime) {

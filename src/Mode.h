@@ -44,7 +44,6 @@ class Mode
 		 */
 		bool setSetting(int idx, int value) {
 			if (this->settings.size() <= idx) {
-				Serial.print("OOB\n");
 				return false;
 			}
 			settings[idx] = value;
@@ -60,6 +59,7 @@ class Mode
 		}
 
 	protected:
+		// Vector that stores our settings
 		Vector<int> settings;
 };
 #endif

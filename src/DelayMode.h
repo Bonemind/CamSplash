@@ -36,8 +36,13 @@ class DelayMode : public Mode
 		void onAction();
 
 	private:
+		// The camera to use
 		Nikon* camera;
+
+		// The start time, from when we started counting our delay
 		unsigned long startMillis;
+
+		// Whether we are waiting for the time to pass before we trigger the camera
 		bool waitingForTime;
 };
 
