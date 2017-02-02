@@ -40,6 +40,11 @@ void LaserMode::update() {
 	int currReading = analogRead(LASER_SENSOR_PIN);
 	int lastReading = this->lightValue;
 
+	if (this->isWaitingForTime() && this->hasDelayPassed()) {
+		Serial.print("SHUTTER\n");
+		this->setFired();
+	}
+
 	// Get Different with previous reading
 	int diff = this->lightValue - currReading;
 	diff = abs(diff);
@@ -56,7 +61,7 @@ void LaserMode::update() {
 	if (this->listening && (diff > 0.1 * lastReading)) {
 		digitalWrite(LASER_PIN, LOW);
 		this->listening = false;
-		Serial.print("SHUTTER\n");
+		this->startDelay();
 	}
 }
 
