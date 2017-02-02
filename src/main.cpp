@@ -4,6 +4,7 @@
 #include "DelayMode.h"
 #include "IRMode.h"
 #include "LaserMode.h"
+#include "SoundMode.h"
 #include <multiCameraIrControl.h>
 #include <SoftwareSerial.h>
 #include <SerialCommand.h>
@@ -48,6 +49,9 @@ void setMode(int idx) {
 			break;
 		case 3:
 			currentMode = new LaserMode(&nikon);
+			break;
+		case 4:
+			currentMode = new SoundMode(&nikon);
 			break;
 	}
 	currentMode->initialize();
@@ -173,7 +177,7 @@ void setup(void) {
 	pinMode(LASER_PIN, OUTPUT);
 	pinMode(MODE_BUTTON_PIN, INPUT_PULLUP);
 	pinMode(ACTION_BUTTON_PIN, INPUT_PULLUP);
-	pinMode(PLUS_BUTTON_PIN, INPUT_PULLUP);
+	pinMode(SOUND_SENSOR_PIN, INPUT);
 	pinMode(MINUS_BUTTON_PIN, INPUT_PULLUP);
 
 	// Set pins to low, just so we have a known start state
@@ -181,6 +185,7 @@ void setup(void) {
 	digitalWrite(CAMERA_CONTROL_PIN, LOW);
 	digitalWrite(FEEDBACKPIN, LOW);
 	digitalWrite(IR_SENSOR_PIN, LOW);
+	digitalWrite(SOUND_SENSOR_PIN, LOW);
 
 	// Initialize mode
 	currentMode = new RemoteMode(&nikon);
