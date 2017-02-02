@@ -39,6 +39,7 @@ void SoundMode::update() {
 	// Fire the shutter
 	if (this->isWaitingForTime() && this->hasDelayPassed()) {
 		Serial.print("SHUTTER\n");
+		this->camera->shutterNow();
 		this->setFired();
 	}
 

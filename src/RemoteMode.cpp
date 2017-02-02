@@ -32,6 +32,7 @@ void RemoteMode::update() {
  */
 void RemoteMode::onAction() {
 	Serial.print("SHUTTER\n");
+	this->camera->shutterNow();
 }
 
 /**

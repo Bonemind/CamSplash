@@ -24,6 +24,7 @@ void DelayMode::initialize() {
 void DelayMode::update() {
 	if (this->isWaitingForTime() && this->hasDelayPassed()) {
 		Serial.print("SHUTTER\n");
+		this->camera->shutterNow();
 		this->setFired();
 	}
 }
