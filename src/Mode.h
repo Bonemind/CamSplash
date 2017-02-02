@@ -6,6 +6,8 @@
 #include <Arduino_Vector.h>
 #include "Pins.h"
 
+#define SETTINGS_MILLIS_DELAY 0
+
 /**
  * Abstact mode class
  * Parent for any modes we need while taking pictures
@@ -13,6 +15,14 @@
 class Mode
 {
 	public:
+
+		/**
+		 * Constructor used to set vars for shared delay mode
+		 */
+		Mode() {
+			this->settings.push_back(0);
+			this->waitingForTime = false;
+		}
 
 		/**
 		 * Returns the name of the mode for display purposes
@@ -71,8 +81,44 @@ class Mode
 			Serial.print("\n");
 		}
 
+		/**
+		 * Whether we are waiting for time to elapse
+		 * This means we did request action, but are waiting for the configured delay to pass
+		 */
+		bool isWaitingForTime() {
+			return this->waitingForTime;
+		}
+
+		/**
+		 * Checks if the configured delay has passed for action
+		 */
+		bool hasDelayPassed() {
+			return millis() - this->startMillis >= this->settings[SETTINGS_MILLIS_DELAY];
+		}
+
+		/**
+		 * Starts counting a delay after shutter request
+		 */
+		void startDelay() {
+			this->startMillis = millis();
+			this->waitingForTime = true;
+		}
+
+		/**
+		 * Tells us we've fired shutter so we're no longer waiting for time
+		 */
+		void setFired() {
+			this->waitingForTime = false;
+		}
 	protected:
 		// Vector that stores our settings
 		Vector<int> settings;
+
+	private:
+		// The start time, from when we started counting our delay
+		unsigned long startMillis;
+
+		// Whether we are waiting for the time to pass before we trigger the camera
+		bool waitingForTime;
 };
 #endif
